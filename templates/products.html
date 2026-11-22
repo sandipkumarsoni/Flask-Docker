@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Products</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Arial, sans-serif;
+      color: #1c1e21;
+      background: #f0f2f5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    header {
+      padding: 18px max(24px, calc((100% - 960px) / 2));
+      background: #1877f2;
+      color: #fff;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    main {
+      width: min(960px, calc(100% - 32px));
+      margin: 32px auto;
+      padding: 24px;
+      overflow-x: auto;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 2px 8px #1c1e211a;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin: 16px 0 32px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      font-weight: bold;
+    }
+
+    input,
+    button {
+      padding: 10px;
+      border: 1px solid #ccd0d5;
+      border-radius: 6px;
+      font: inherit;
+    }
+
+    button {
+      align-self: end;
+      border-color: #1877f2;
+      background: #1877f2;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #0866ff;
+    }
+
+    .message {
+      color: #b42318;
+    }
+
+    .success {
+      color: #187a3d;
+    }
+
+    th,
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #e4e6eb;
+    }
+
+    th {
+      background: #e7f3ff;
+      color: #0866ff;
+    }
+
+    tbody tr:hover {
+      background: #f5f9ff;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        margin: 16px auto;
+        padding: 16px;
+      }
+
+      th,
+      td {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Products</h1>
+  </header>
+  <main>
+    {% if error %}
+    <p class="message" role="alert">{{ error }}</p>
+    {% endif %}
+    {% if added %}
+    <p class="success" role="status">Product added.</p>
+    {% endif %}
+    <section aria-labelledby="add-product-heading">
+      <h2 id="add-product-heading">Add a product</h2>
+      <form action="{{ url_for('create_product') }}" method="post">
+        <label for="name">Name
+          <input id="name" name="name" maxlength="255" required value="{{ form_values.name or '' }}">
+        </label>
+        <label for="description">Description
+          <input id="description" name="description" value="{{ form_values.description or '' }}">
+        </label>
+        <label for="price">Price
+          <input id="price" name="price" type="number" min="0" max="99999999.99" step="0.01" required value="{{ form_values.price or '' }}">
+        </label>
+        <label for="stock_quantity">Stock quantity
+          <input id="stock_quantity" name="stock_quantity" type="number" min="0" step="1" required value="{{ form_values.stock_quantity or '0' }}">
+        </label>
+        <button type="submit">Add product</button>
+      </form>
+    </section>
+    {% if products %}
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product in products %}
+        <tr>
+          <td>{{ product.id }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.description or "" }}</td>
+          <td>{{ product.price or "" }}</td>
+          <td>{{ product.stock_quantity }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% elif not error %}
+    <p>No products found.</p>
+    {% endif %}
+  </main>
+</body>
+</html>
