@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    image: flask-web-soni:v2
+    container_name: flask-R2R-soni
+    restart: unless-stopped
+    environment:
+      MYSQL_HOST: host.docker.internal
+      MYSQL_PORT: ${MYSQL_PORT:-3306}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-product_api}
+      MYSQL_USER: ${MYSQL_USER:?Set MYSQL_USER in .env}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?Set MYSQL_PASSWORD in .env}
+    ports:
+      - "5000:5000"
+      - "5001:5000"
+

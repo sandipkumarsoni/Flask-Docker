@@ -5,7 +5,7 @@ from decimal import Decimal, InvalidOperation
 
 import mysql.connector
 from flask import Flask, jsonify, redirect, render_template, request, url_for
-
+print("satarting app.py")
 app = Flask(__name__, static_folder=None)
 logger = logging.getLogger(__name__)
 
@@ -168,3 +168,4 @@ def list_products():
         return jsonify({"error": "Database unavailable"}), 503
 
     return jsonify(products)
+print("ending app.py")

@@ -10,4 +10,4 @@ INSERT INTO products (name, description, price, stock_quantity) VALUES
     ('Travel mug 4', 'Insulated stainless steel mug', 18.00, 0),
     ('Travel mug 5', 'Insulated stainless steel mug', 18.00, 0),
     ('Travel mug 6', 'Insulated stainless steel mug', 18.00, 0),
-    ('Travel mug 7', 'Insulated stainless steel mug', 18.00, 0),
+    ('Travel mug 7', 'Insulated stainless steel mug', 18.00, 0);
